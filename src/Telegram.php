@@ -5,7 +5,7 @@
  * @author Yuri Frantsevich (FYN)
  * Date: 20/08/2011
  * Time: 08:46
- * @version 1.0.1
+ * @version 1.0.2
  * @copyright 2021
  */
 
@@ -102,7 +102,8 @@ class Telegram {
         elseif (isset($t_bot['error_code']) && $t_bot['error_code']) {
             $this->logs[] = $t_bot['error_code'].": ".$t_bot['description'];
         }
-        if ($this->debug) $this->logs[] = "Telegram send status: ".$t_bot;
+        if ($this->debug && is_array($t_bot)) $this->logs[] = "Telegram send status: ".$t_bot['ok'];
+        elseif ($this->debug) $this->logs[] = "Telegram send status: ".$t_bot;
         return $t_bot;
     }
 
