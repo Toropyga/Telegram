@@ -5,7 +5,7 @@
  * @author Yuri Frantsevich (FYN)
  * Date: 20/08/2011
  * Time: 08:46
- * @version 1.0.0
+ * @version 1.0.1
  * @copyright 2021
  */
 
@@ -58,7 +58,8 @@ class Telegram {
      * Telegram constructor.
      * @param \FYN\NetContent $net
      */
-    public function __construct(NetContent $net) {
+    public function __construct(NetContent $net = null) {
+        if ($net === null) $net = new \FYN\NetContent();
         $this->net = $net;
     }
 
