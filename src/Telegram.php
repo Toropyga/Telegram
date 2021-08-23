@@ -5,7 +5,7 @@
  * @author Yuri Frantsevich (FYN)
  * Date: 20/08/2011
  * Time: 08:46
- * @version 1.0.2
+ * @version 1.1.0
  * @copyright 2021
  */
 
@@ -60,6 +60,10 @@ class Telegram {
      */
     public function __construct(NetContent $net = null) {
         if ($net === null) $net = new \FYN\NetContent();
+        if (defined("TELEGRAM_TOKEN")) $this->telegram_token = TELEGRAM_TOKEN;
+        if (defined("TELEGRAM_ID")) $this->telegram_id = TELEGRAM_ID;
+        if (defined("TELEGRAM_DEBUG")) $this->debug = TELEGRAM_DEBUG;
+        if (defined("TELEGRAM_LOG_NAME")) $this->log_file = TELEGRAM_LOG_NAME;
         $this->net = $net;
     }
 
@@ -75,7 +79,7 @@ class Telegram {
      * Отправка сообщения в Телеграм Бот
      * @param $message - сообщение
      * @param int $token - ключ к Теллеграм
-     * @param int $chat_id - идентификатор чата
+     * @param int $chat_id - идентификатор чата (человека, которому посылаем сообщение)
      * @return bool|false|string
      */
     public function sendToTelegram ($message, $token = 0, $chat_id = 0) {
@@ -93,6 +97,11 @@ class Telegram {
         $message = Base::convertLine($message);
         if ($this->debug) $this->logs[] = "Telegram message: ".$message;
         $url = "https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $chat_id . "&text=" . urlencode($message);
+
+//        file: "/config/snapshots/img_c2.jpg"
+//        caption: "Photo"
+//        timeout: 1000
+
         if ($this->debug) $this->logs[] = "Telegram URL: ".$url;
         $t_bot = json_decode($this->net->getContent($url, 5), true);
         if (!isset($t_bot['ok'])) {
@@ -101,6 +110,7 @@ class Telegram {
         }
         elseif (isset($t_bot['error_code']) && $t_bot['error_code']) {
             $this->logs[] = $t_bot['error_code'].": ".$t_bot['description'];
+            $t_bot = false;
         }
         if ($this->debug && is_array($t_bot)) $this->logs[] = "Telegram send status: ".$t_bot['ok'];
         elseif ($this->debug) $this->logs[] = "Telegram send status: ".$t_bot;
