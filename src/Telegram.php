@@ -5,7 +5,7 @@
  * @author Yuri Frantsevich (FYN)
  * Date: 20/08/2011
  * Time: 08:46
- * @version 1.1.0
+ * @version 2.0.0
  * @copyright 2021
  */
 
@@ -82,7 +82,7 @@ class Telegram {
      * @param int $chat_id - идентификатор чата (человека, которому посылаем сообщение)
      * @return bool|false|string
      */
-    public function sendToTelegram ($message, $token = 0, $chat_id = 0) {
+    public function sendMessage ($message, $token = 0, $chat_id = 0) {
         if ($this->debug) $this->logs[] = "Function sendToTelegram started";
         if (!$token) $token = $this->telegram_token;
         if (!$chat_id) $chat_id = $this->telegram_id;
@@ -96,14 +96,57 @@ class Telegram {
         }
         $message = Base::convertLine($message);
         if ($this->debug) $this->logs[] = "Telegram message: ".$message;
-        $url = "https://api.telegram.org/bot" . $token . "/sendMessage?chat_id=" . $chat_id . "&text=" . urlencode($message);
 
-//        file: "/config/snapshots/img_c2.jpg"
-//        caption: "Photo"
-//        timeout: 1000
-
+        $url = "https://api.telegram.org/bot" . $token . "/sendMessage";
         if ($this->debug) $this->logs[] = "Telegram URL: ".$url;
-        $t_bot = json_decode($this->net->getContent($url, 5), true);
+        $data = array("chat_id"=>$chat_id, "text"=>$message);
+
+        $this->net->setMethod('POST');
+        $t_bot = json_decode($this->net->getContent($url, 5, $data), true);
+        if (!isset($t_bot['ok'])) {
+            $t_bot = false;
+            $this->logs[] = "Telegram SEND ERROR!";
+        }
+        elseif (isset($t_bot['error_code']) && $t_bot['error_code']) {
+            $this->logs[] = $t_bot['error_code'].": ".$t_bot['description'];
+            $t_bot = false;
+        }
+        if ($this->debug && is_array($t_bot)) $this->logs[] = "Telegram send status: ".$t_bot['ok'];
+        elseif ($this->debug) $this->logs[] = "Telegram send status: ".$t_bot;
+        return $t_bot;
+    }
+
+    /**
+     * Отправка картинки в Телеграм Бот
+     * @param string $photo - путь к картинке
+     * @param string $caption - сообщение под картинкой
+     * @param int $token - ключ к Теллеграм
+     * @param int $chat_id - идентификатор чата (человека, которому посылаем сообщение)
+     * @return bool|false|string
+     */
+    public function sendPhoto ($photo, $caption = '', $token = 0, $chat_id = 0) {
+        if ($this->debug) $this->logs[] = "Function sendToTelegram started";
+        if (!$token) $token = $this->telegram_token;
+        if (!$chat_id) $chat_id = $this->telegram_id;
+        if ($this->debug) $this->logs[] = "Telegram token: ".$token;
+        if ($this->debug) $this->logs[] = "Telegram Chat ID: ".$chat_id;
+        if (!$token || !$chat_id) {
+            $this->logs[] = "Wrong Telegram parameters!";
+            if (!$token) $this->logs[] = "Token not defined!";
+            else $this->logs[] = "Chat ID not defined!";
+            return false;
+        }
+        $caption = Base::convertLine($caption);
+        if ($this->debug) $this->logs[] = "Telegram caption: ".$caption;
+        if ($this->debug) $this->logs[] = "Telegram photo: ".$photo;
+        $photo = new \CURLFile(realpath($photo));
+
+        $url = "https://api.telegram.org/bot" . $token . "/sendPhoto";
+        if ($this->debug) $this->logs[] = "Telegram URL: ".$url;
+        $data = array("chat_id"=>$chat_id, "photo" => $photo, "caption"=>$caption);
+
+        $this->net->setMethod('POST');
+        $t_bot = json_decode($this->net->getContent($url, 5, $data), true);
         if (!isset($t_bot['ok'])) {
             $t_bot = false;
             $this->logs[] = "Telegram SEND ERROR!";

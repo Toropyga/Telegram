@@ -14,8 +14,8 @@
 
 Класс Telegram предназначен для отправки сообщений от имени Телеграм бота.
 
-Для работы необходимо наличие PHP версии 5 и выше.
-Используются дополниельные библиотеки [Base](https://github.com/Toropyga/Base) и [NetContent](https://github.com/Toropyga/NetContent)
+Для работы необходимо наличие PHP версии 5 и выше, библиотеки PHP php-json и php-curl.
+Также используются дополниельные библиотеки [Base](https://github.com/Toropyga/Base) и [NetContent](https://github.com/Toropyga/NetContent)
 
 # Установка
 
@@ -24,7 +24,6 @@
 ```bash
 composer require toropyga/telegram
 ```
-или просто скачайте и сохраните библиотеку в нужную директорию.
 
 # Настройка
 Предварительная настройка параметров по умолчанию может осуществлятся или непосредственно в самом классе, или с помощью именованных констант.
@@ -47,7 +46,7 @@ require_once("Telegram.php");
 ```php
 require_once("vendor/autoload.php");
 ```
-
+---
 Инициализация класса
 ```php
 use \FYN\Base;
@@ -59,15 +58,31 @@ $telegram = new FYN\Telegram($net);
 use \FYN\Base;
 $telegram = new FYN\Telegram();
 ```
+---
 Отправка сообщения
 ```php
 $token = "000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // токен Телеграм бота
 $chat_id = 000000000; // ID чата получателя
-if (!$answer = $telegram->sendToTelegram("Hi!", $token, $chat_id)) Base::dump($telegram->getLogs());
+if (!$answer = $telegram->sendMessege("Hi!", $token, $chat_id)) Base::dump($telegram->getLogs());
 else Base::dump($answer);
 ```
 имли отправка сообщения с использованием параметров по умолчанию
 ```php
-if (!$answer = $telegram->sendToTelegram("Hi!")) Base::dump($telegram->getLogs());
+if (!$answer = $telegram->sendMessege("Hi!")) Base::dump($telegram->getLogs());
+else Base::dump($answer);
+```
+---
+Отправка фотографии
+```php
+$token = "000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // токен Телеграм бота
+$chat_id = 000000000; // ID чата получателя
+$path_to_photo = "/home/images/my.jpeg";
+if (!$answer = $telegram->sendPhoto($path_to_photo, "It's my photo!", $token, $chat_id)) Base::dump($telegram->getLogs());
+else Base::dump($answer);
+```
+имли отправка фотографии с использованием параметров по умолчанию
+```php
+$path_to_photo = "/home/images/my.jpeg";
+if (!$answer = $telegram->sendPhoto($path_to_photo, "It's my photo!")) Base::dump($telegram->getLogs());
 else Base::dump($answer);
 ```
