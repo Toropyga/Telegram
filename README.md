@@ -100,7 +100,7 @@ $telegram->setMethod('sendPhoto');
 if (!$answer = $telegram->sendToTelegram($caption, $path_to_photo, $token, $chat_id)) Base::dump($telegram->getLogs());
 else Base::dump($answer);
 ```
-имли отправка фотографии с использованием параметров по умолчанию
+или отправка фотографии с использованием параметров по умолчанию
 ```php
 $caption = "It's my photo!";
 $path_to_photo = "/home/images/my.jpeg";
