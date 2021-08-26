@@ -122,6 +122,6 @@ else Base::dump($answer);
 $caption = "It's my photo!";
 $path_to_photo = "/home/images/my.jpeg";
 $telegram->setMethod('sendPhoto');
-if (!$answer = $telegram->sendToTelegram($caption, $path_to_photo")) Base::dump($telegram->getLogs());
+if (!$answer = $telegram->sendToTelegram($caption, $path_to_photo)) Base::dump($telegram->getLogs());
 else Base::dump($answer);
 ```
