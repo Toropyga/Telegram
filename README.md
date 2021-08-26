@@ -39,7 +39,7 @@ composer require toropyga/telegram
 
 # Описание работы
 
-##Подключение файла класса
+## Подключение файла класса
 ```php
 require_once("NetContent.php");
 require_once("Base.php");
@@ -50,7 +50,7 @@ require_once("Telegram.php");
 require_once("vendor/autoload.php");
 ```
 ---
-##Инициализация класса
+## Инициализация класса
 ```php
 use \FYN\Base;
 $net = new FYN\NetContent();
@@ -62,11 +62,11 @@ use \FYN\Base;
 $telegram = new FYN\Telegram();
 ```
 ---
-##Установка метода взаимодействия с API Телеграм
+## Установка метода взаимодействия с API Телеграм
 ```php
 $telegram->setMethod('sendVideo');
 ```
-###Поддерживаемые методы:
+### Поддерживаемые методы:
 * 'sendMessage' - отправка текстового сообщения,
 * 'sendPhoto' - отправка фотографии или изображения,
 * 'sendDocument' - отправка документа как вложения,
@@ -75,7 +75,7 @@ $telegram->setMethod('sendVideo');
 * 'sendVoice' - отправка голосового сообщения,
 * 'sendAnimation' - отправка анимированного изображения.
 ---
-##Пример отправки сообщения
+## Пример отправки сообщения
 ```php
 $token = "000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // токен Телеграм бота
 $chat_id = 000000000; // ID чата получателя
@@ -90,7 +90,7 @@ if (!$answer = $telegram->sendToTelegram($message)) Base::dump($telegram->getLog
 else Base::dump($answer);
 ```
 ---
-##Пример отправки фотографии
+## Пример отправки фотографии
 ```php
 $token = "000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // токен Телеграм бота
 $chat_id = 000000000; // ID чата получателя
