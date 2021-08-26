@@ -82,6 +82,7 @@ class Telegram {
      */
     public function setDebug ($debug = false) {
         $this->debug = $debug;
+        if ($this->debug) $this->logs[] = "Telegram debug: ON";
     }
 
     /**
@@ -99,6 +100,7 @@ class Telegram {
     public function setMethod ($method = 'sendMessage') {
         $avaliable_methods = array('sendMessage', 'sendPhoto', 'sendDocument', 'sendVideo', 'sendAudio', 'sendVoice', 'sendAnimation');
         if (in_array($method, $avaliable_methods)) {
+            if ($this->debug) $this->logs[] = "Telegram method set to ".$method;
             $this->method = $method;
         }
     }
