@@ -67,13 +67,13 @@ $telegram = new FYN\Telegram();
 $telegram->setMethod('sendVideo');
 ```
 ### Поддерживаемые методы
-* 'sendMessage' - отправка текстового сообщения,
-* 'sendPhoto' - отправка фотографии или изображения,
-* 'sendDocument' - отправка документа как вложения,
-* 'sendVideo' - отправка видио,
-* 'sendAudio' - отправка звукового файла,
-* 'sendVoice' - отправка голосового сообщения,
-* 'sendAnimation' - отправка анимированного изображения.
+* ['sendMessage'](https://core.telegram.org/bots/api#sendmessage) - отправка текстового сообщения,
+* ['sendPhoto'](https://core.telegram.org/bots/api#sendphoto) - отправка фотографии или изображения,
+* ['sendDocument'](https://core.telegram.org/bots/api#senddocument) - отправка документа как вложения,
+* ['sendVideo'](https://core.telegram.org/bots/api#sendvideo) - отправка видео файла,
+* ['sendAudio'](https://core.telegram.org/bots/api#sendaudio) - отправка звукового файла,
+* ['sendVoice'](https://core.telegram.org/bots/api#sendvoice) - отправка голосового сообщения,
+* ['sendAnimation'](https://core.telegram.org/bots/api#sendanimation) - отправка анимированного изображения.
 ---
 ## Пример отправки сообщения
 ```php
