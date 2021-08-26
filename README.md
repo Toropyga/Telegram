@@ -18,7 +18,7 @@
 
 Класс Telegram предназначен для отправки сообщений от имени Телеграм бота.
 
-Для работы необходимо наличие PHP версии 5 и выше, библиотеки PHP php-json и php-curl.
+Для работы необходимо наличие PHP версии 5.5 и выше, библиотеки PHP php-json и php-curl.
 Также используются дополниельные библиотеки [Base](https://github.com/Toropyga/Base) и [NetContent](https://github.com/Toropyga/NetContent)
 
 # Установка
