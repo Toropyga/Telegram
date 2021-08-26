@@ -83,7 +83,7 @@ $telegram->setMethod('sendMessage');
 if (!$answer = $telegram->sendToTelegram($message, $token, $chat_id)) Base::dump($telegram->getLogs());
 else Base::dump($answer);
 ```
-имли отправка сообщения с использованием параметров по умолчанию
+или отправка сообщения с использованием параметров по умолчанию
 ```php
 $message = "Hi!";
 if (!$answer = $telegram->sendToTelegram($message)) Base::dump($telegram->getLogs());
