@@ -59,30 +59,49 @@ use \FYN\Base;
 $telegram = new FYN\Telegram();
 ```
 ---
-Отправка сообщения
+Установка метода взаимодействия с API Телеграм
+```php
+$telegram->setMethod('sendVideo');
+```
+Поддерживаемые методы:
+* 'sendMessage' - отправка текстового сообщения,
+* 'sendPhoto' - отправка фотографии или изображения,
+* 'sendDocument' - отправка документа как вложения,
+* 'sendVideo' - отправка видио,
+* 'sendAudio' - отправка звукового файла,
+* 'sendVoice' - отправка голосового сообщения,
+* 'sendAnimation' - отправка анимированного изображения.
+---
+Пример отправки сообщения
 ```php
 $token = "000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // токен Телеграм бота
 $chat_id = 000000000; // ID чата получателя
-if (!$answer = $telegram->sendMessege("Hi!", $token, $chat_id)) Base::dump($telegram->getLogs());
+$telegram->setMethod('sendMessage');
+if (!$answer = $telegram->sendToTelegram($message, $token, $chat_id)) Base::dump($telegram->getLogs());
 else Base::dump($answer);
 ```
 имли отправка сообщения с использованием параметров по умолчанию
 ```php
-if (!$answer = $telegram->sendMessege("Hi!")) Base::dump($telegram->getLogs());
+$message = "Hi!";
+if (!$answer = $telegram->sendToTelegram($message)) Base::dump($telegram->getLogs());
 else Base::dump($answer);
 ```
 ---
-Отправка фотографии
+Пример отправки фотографии
 ```php
 $token = "000000000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // токен Телеграм бота
 $chat_id = 000000000; // ID чата получателя
+$caption = "It's my photo!";
 $path_to_photo = "/home/images/my.jpeg";
-if (!$answer = $telegram->sendPhoto($path_to_photo, "It's my photo!", $token, $chat_id)) Base::dump($telegram->getLogs());
+$telegram->setMethod('sendPhoto');
+if (!$answer = $telegram->sendToTelegram($caption, $path_to_photo, $token, $chat_id)) Base::dump($telegram->getLogs());
 else Base::dump($answer);
 ```
 имли отправка фотографии с использованием параметров по умолчанию
 ```php
+$caption = "It's my photo!";
 $path_to_photo = "/home/images/my.jpeg";
-if (!$answer = $telegram->sendPhoto($path_to_photo, "It's my photo!")) Base::dump($telegram->getLogs());
+$telegram->setMethod('sendPhoto');
+if (!$answer = $telegram->sendToTelegram($caption, $path_to_photo")) Base::dump($telegram->getLogs());
 else Base::dump($answer);
 ```
